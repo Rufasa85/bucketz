@@ -1,0 +1,13 @@
+.BucketItem.low {
+    background:lightgreen
+}
+.BucketItem.med {
+    background:lightgoldenrodyellow
+}
+.BucketItem.high {
+    background:salmon
+}
+.BucketItem.complete {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
