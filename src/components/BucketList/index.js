@@ -21,7 +21,13 @@ export default function BucketList(props) {
             priority:newItemPriority,
             isComplete:false
         }
-        setTasks([...tasks,newTask])
+        setNewItem("")
+        setNewItemPriority("med")
+       API.createTodo(newTask,props.token).then(data=>{
+        API.getUserTodos(props.userId).then(data=>{
+            setTasks(data.Todos)
+        })
+       })
     }
     const completeTask = idx=>{
         const arrCopy = [...tasks];

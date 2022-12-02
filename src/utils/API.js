@@ -1,7 +1,7 @@
 // in dev mode
-// const URL_PREFIX= "http://localhost:3001"
+const URL_PREFIX= "http://localhost:3001"
 // in prod mode
-const URL_PREFIX= "https://todo-joewt.herokuapp.com"
+// const URL_PREFIX= "https://todo-joewt.herokuapp.com"
 
 const  API = {
     login: (userObj)=>{
@@ -21,6 +21,16 @@ const  API = {
         return fetch(`${URL_PREFIX}/api/users/getuserfromtoken`,{
             method:"GET",
             headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        }).then(res=>res.json())
+    },
+    createTodo:(todoObj,token)=>{
+        return fetch(`${URL_PREFIX}/api/todos`,{
+            method:"POST",
+            body:JSON.stringify(todoObj),
+            headers:{
+                "Content-Type":"application/json",
                 "Authorization":`Bearer ${token}`
             }
         }).then(res=>res.json())
