@@ -12,10 +12,6 @@ function App() {
   const [userEmail, setUserEmail] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [token, setToken] = useState("")
-  const [loginEmail, setLoginEmail] = useState("")
-  const [loginPassword, setLoginPassword] = useState("")
-  const [signupEmail, setSignupEmail] = useState("")
-  const [signupPassword, setSignupPassword] = useState("")
 
   useEffect(()=>{
     const storedToken = localStorage.getItem("token")
@@ -35,12 +31,8 @@ function App() {
     }
   },[])
 
-  const handleLoginSubmit = e=>{
-    e.preventDefault();
-    API.login({
-      email:loginEmail,
-      password:loginPassword
-    }).then(data=>{
+  const handleLoginSubmit = userObj=>{
+    API.login(userObj).then(data=>{
       console.log(data);
       if(data.token){
         setUserId(data.user.id)
@@ -51,12 +43,8 @@ function App() {
       }
     })
   }
-  const handleSignupSubmit = e=>{
-    e.preventDefault();
-    API.signup({
-      email:signupEmail,
-      password:signupPassword
-    }).then(data=>{
+  const handleSignupSubmit = userObj=>{
+    API.signup(userObj).then(data=>{
       console.log(data);
       if(data.token){
         setUserId(data.user.id)
@@ -82,14 +70,6 @@ function App() {
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login
             isLoggedIn={isLoggedIn}
-            loginEmail={loginEmail}
-            setLoginEmail={setLoginEmail}
-            loginPassword={loginPassword}
-            setLoginPassword={setLoginPassword}
-            signupEmail={signupEmail}
-            setSignupEmail={setSignupEmail}
-            signupPassword={signupPassword}
-            setSignupPassword={setSignupPassword}
             handleLoginSubmit={handleLoginSubmit}
             handleSignupSubmit={handleSignupSubmit}
           />}/>
