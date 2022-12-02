@@ -1,6 +1,11 @@
 import {useEffect, useState} from "react";
 import BucketList from "./components/BucketList";
 import API from "./utils/API";
+import Home from "./pages/Home"
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import Profile from "./pages/Profile";
+import Navbar from "./components/NavBar";
+import Login from "./pages/Login";
 
 function App() {
   const [userId, setUserId] = useState(0)
@@ -71,7 +76,38 @@ function App() {
   }
   return (
     <div className="App">
-      {isLoggedIn&&<button onClick={handleLogout}>Logout</button>}
+      <Router>
+        <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login
+            isLoggedIn={isLoggedIn}
+            loginEmail={loginEmail}
+            setLoginEmail={setLoginEmail}
+            loginPassword={loginPassword}
+            setLoginPassword={setLoginPassword}
+            signupEmail={signupEmail}
+            setSignupEmail={setSignupEmail}
+            signupPassword={signupPassword}
+            setSignupPassword={setSignupPassword}
+            handleLoginSubmit={handleLoginSubmit}
+            handleSignupSubmit={handleSignupSubmit}
+          />}/>
+          <Route path="/profile" element={<Profile 
+          isLoggedIn={isLoggedIn} 
+          userId={userId} 
+          token={token} 
+          userEmail={userEmail}
+          setIsLoggedIn={setIsLoggedIn}
+          setToken={setToken}
+          setUserId={setUserId}
+          setUserEmail={setUserEmail}
+          />}/>
+          <Route path="*" element={<h1>404 page</h1>}/>
+        </Routes>
+        <h2>Footer</h2>
+      </Router>
+      {/* {isLoggedIn&&<button onClick={handleLogout}>Logout</button>}
       {isLoggedIn?(
         <div>
         <h1>Welcome {userEmail}!</h1>
@@ -92,7 +128,7 @@ function App() {
           <button>Signup!</button>
         </form>
         </div>
-      )}
+      )} */}
       
     </div>
   );

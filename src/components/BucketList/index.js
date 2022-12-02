@@ -10,9 +10,10 @@ export default function BucketList(props) {
     ])
     useEffect(()=>{
         API.getUserTodos(props.userId).then(data=>{
+            console.log(data)
             setTasks(data.Todos)
         })
-    },[])
+    },[props.userId])
 
     const handleFormSubmit = e=>{
         e.preventDefault();
