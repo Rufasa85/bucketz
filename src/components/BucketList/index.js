@@ -23,26 +23,26 @@ export default function BucketList(props) {
         }
         setNewItem("")
         setNewItemPriority("med")
-       API.createTodo(newTask,props.token).then(data=>{
+       API.createTodo(newTask,props.token).then(newTodoData=>{
         API.getUserTodos(props.userId).then(data=>{
             setTasks(data.Todos)
         })
        })
     }
-    const completeTask = idx=>{
-        const arrCopy = [...tasks];
-        arrCopy[idx].isComplete = !arrCopy[idx].isComplete
-        setTasks(arrCopy)
+
+    const deleteTask = id=>{
+       API.deleteTodo(id,props.token).then(del=>{
+        API.getUserTodos(props.userId).then(data=>{
+            setTasks(data.Todos)
+        })
+       })
     }
-    const deleteTask = idx=>{
-        const arrCopy = [...tasks];
-        arrCopy.splice(idx,1)
-        setTasks(arrCopy)
-    }
-    const editTask = (idx,newTask)=>{
-        const arrCopy = [...tasks];
-        arrCopy[idx]=newTask
-        setTasks(arrCopy)
+    const editTask = (id,newTask)=>{
+        API.editTodo(newTask,id,props.token).then(updateData=>{
+            API.getUserTodos(props.userId).then(data=>{
+                setTasks(data.Todos)
+            })
+        })
     }
   return (
     <div className="BucketList">
@@ -56,12 +56,12 @@ export default function BucketList(props) {
             <button>Add to list!</button>
         </form>
         <ul>
-            {tasks.map((item,i)=><BucketItem 
-            key={i} 
-            index={i} 
+            {tasks.map((item)=><BucketItem 
+            key={item.id} 
+            id={item.id} 
             task={item.task} 
             priority={item.priority} 
-            completeTask={completeTask} 
+          
             deleteTask={deleteTask} 
             editTask={editTask} 
             isComplete={item.isComplete}/>)}

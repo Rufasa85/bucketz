@@ -12,8 +12,16 @@ export default function BucketItem(props) {
             priority:editItemPriority,
             isComplete:props.isComplete
         }
-        props.editTask(props.index,newItem)
+        props.editTask(props.id,newItem)
         setIsEditing(false)
+    }
+    const handleCompleteBtn = e=>{
+        const newItem={
+            task:props.task,
+            priority:props.priority,
+            isComplete:!props.isComplete
+        }
+        props.editTask(props.id,newItem)
     }
   return (
     <>
@@ -30,9 +38,9 @@ export default function BucketItem(props) {
    ):(
    <li className={`BucketItem ${props.priority} ${props.isComplete?"complete":""}`}>
         task: {props.task}<br/>  priority: {props.priority} <br/>
-        <button onClick={()=>props.deleteTask(props.index)}>Delete</button>
+        <button onClick={()=>props.deleteTask(props.id)}>Delete</button>
         <button onClick={()=>setIsEditing(true)}>Edit</button>
-        <button onClick={()=>props.completeTask(props.index)}>{props.isComplete?"restart task":"complete task"}</button>
+        <button onClick={handleCompleteBtn}>{props.isComplete?"restart task":"complete task"}</button>
     </li>
     )
     }
