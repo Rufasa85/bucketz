@@ -1,34 +1,18 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
+import API from '../../utils/API'
 import BucketItem from '../BucketItem'
 
-export default function BucketList() {
+export default function BucketList(props) {
     const [newItem, setNewItem] = useState("")
     const [newItemPriority, setNewItemPriority] = useState("med")
     const [tasks, setTasks] = useState([
-        {
-      
-            task:  "Pet all the cats",
-            priority:"low",
-            isComplete:false
-        },
-
-        {
-    
-            task:  "Pet a tiger",
-            priority:"med",
-            isComplete:false
-        }, {
        
-            task:  "Pet a manatee",
-            priority:"low",
-            isComplete:false
-        },{
-        
-            task:  "Climb Mt. Rainier",
-            priority:"high",
-            isComplete:false
-        },
     ])
+    useEffect(()=>{
+        API.getUserTodos(props.userId).then(data=>{
+            setTasks(data.Todos)
+        })
+    },[])
 
     const handleFormSubmit = e=>{
         e.preventDefault();
